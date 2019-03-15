@@ -1,0 +1,115 @@
+﻿@using MVCProjektRWA.Models.MyModels;
+@model  IEnumerable<Kupac>
+
+@{
+    ViewBag.Title = "Prikaz kupaca";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prezime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefon)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prezime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefon)
+            </td>
+            @*@<td class="text-right">
+                    @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Uredi", "UpdateKupac", new { id = item.IDKupac }, new { @class = "btn btn-info" })
+                }
+                    @@@Html.ActionLink("Računi", "Racuni", new { id = item.IDKupac }, new { @class = "btn btn-info" })@@
+                </td>@*@
+            <td>
+                @Html.ActionLink("Uredi", "UpdateKupac", new { id = item.IDKupac }, new { @class = "btn btn-info" })
+            </td>
+            <td>
+                @Html.ActionLink("Računi", "Racuni", new { id = item.IDKupac }, new { @class = "btn btn-info" })
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+<script>
+            @if (Model.Count() == 0)
+        {
+            @:toastr.info("Nema racuna");
+        }   
+</script>
+}*@
+
+
+
+
+
+
+    @*<tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prezime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefon)
+                    </td>
+                    <td class="text-right">
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            @Html.ActionLink("Uredi", "EditKupac", new { id = item.IDKupac }, new { @class = "btn btn-info" })
+                        }
+                        @@Html.ActionLink("Računi", "Racuni", new { id = item.IDKupac }, new { @class = "btn btn-info" })@
+                    </td>
+                </tr>
+            }
+        </tbody>
+        </table>*@
+
+
+    @*<div class="kolekcijaKupaca" style="padding-top:30px">
+            @foreach (var k in Model)
+            {
+                @Html.Partial("_Kupac", k);
+            }
+        </div>*@

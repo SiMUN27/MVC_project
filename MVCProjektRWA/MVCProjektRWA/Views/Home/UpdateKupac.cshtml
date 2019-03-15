@@ -1,0 +1,179 @@
+﻿@using MVCProjektRWA.Models.MyModels
+@model Kupac
+
+@{
+    ViewBag.Title = "Uredi Kupca";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var ddlOpcije = ViewBag.gradovi as List<Grad>;
+}
+
+<h2>Uredi Kupca</h2>
+<hr />
+<div class="form-group">
+    <label>Odaberi kupca</label>
+    <select id="ddlKupci" class="form-control"></select>
+</div>
+<hr />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+    $(function () {
+        getKupce();
+    })
+
+        function getKupce() {
+            $("#ddlKupci").html("");
+
+            $.ajax({
+                url: '@Url.Action(controllerName:"AJAX", actionName:"GetKupci")',
+                success: function (data) {
+                    $(data).each(function (index,kupac) {
+                        var ime = `${kupac.Ime} ${kupac.Prezime}`;
+                        var option = new Option(ime, kupac.IDKupac, null, kupac.IDKupac == @Model.IDKupac)
+                        $("#ddlKupci").append(option);
+                    })
+                }
+            })
+        }
+
+        $("#ddlKupci").on('change', function () {
+            var IDKupac = $(this).val();
+            $("p#info").html("");
+            $.ajax({
+                url: '@Url.Action(controllerName:"AJAX", actionName: "GetKupac")',
+                data: { id: IDKupac },
+                success: function (kupac) {
+                    $("#IDKupac").val(kupac.IDKupac);
+                    $("#Ime").val(kupac.Ime);
+                    $("#Prezime").val(kupac.Prezime);
+                    $("#Email").val(kupac.Email);
+                    $("#Telefon").val(kupac.Telefon);
+                    $("#GradID").val(kupac.GradID);
+                }
+            })
+        })
+
+    @*function getDrzavaID(id) {
+        $("#ddlGradovi").html("");
+        var drzavaID = (id.value);
+
+        $.ajax({
+            url: '@Url.Action(controllerName:"AJAX", actionName:"GetGradovi")',
+            data: { id: drzavaID },
+            success: function (data) {
+                $.each(data, function (id, grad) {
+                    var option = new Option(grad.Naziv, grad.IDGrad);
+                    $("#ddlGradovi").append(option);
+                })
+            }
+        })
+    }*@
+
+    $("form").submit(function (e) {
+            e.preventDefault();
+
+            if ($(this).valid()) {
+                var kupac = {
+                    IDKupac: $("#IDKupac").val(),
+                    Ime: $("#Ime").val(),
+                    Prezime: $("#Prezime").val(),
+                    Email: $("#Email").val(),
+                    Telefon: $("#Telefon").val(),
+                    GradID: $("#GradID").val(),
+                }
+
+                $.ajax({
+                    url: '@Url.Action(controllerName:"AJAX", actionName:"UpdateKupac")',
+                    data: kupac,
+                    statusCode: {
+                        200: function () {
+                            $("p#info").html("Update uspjesan.");
+                        },
+                        500: function () {
+                            $("p#info").html("Update nije uspjesan.");
+                        }
+                    }
+            })
+            }
+            else {
+                $("p#info").html("Unesite sve podatke.");
+            }
+
+        })
+    </script>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.IDKupac)
+    <div class="form-horizontal">
+        <h4>Kupac</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDKupac, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IDKupac, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IDKupac, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Prezime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Prezime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Prezime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Telefon, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Telefon, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Telefon, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+       
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.GradID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("GradID", selectList: new SelectList(
+                     items: ddlOpcije,
+                     dataTextField: "Naziv",
+                     dataValueField: "IDGrad"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.GradID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<p id="info" style="color:red;"></p>
+<div>
+    @Html.ActionLink("Natrag na pregled drzava", "Drzave")
+</div>

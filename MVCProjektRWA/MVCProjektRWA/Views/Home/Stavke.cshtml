@@ -1,0 +1,96 @@
+﻿@model IEnumerable<MVCProjektRWA.Models.MyModels.Stavka>
+
+@{
+    ViewBag.Title = "Stavke";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Stavke</h2>
+
+<div>
+    <h4>Stavka</h4>
+    <hr />
+    <table class="table table-striped table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Kolicina)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CijenaPoKomadu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Popust)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UkupnaCijena)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Proizvod.Naziv)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Proizvod.BrojProizvoda)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Proizvod.Boja)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Proizvod.MinimalnaKolicinaNaSkladistu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Proizvod.CijenaBezPDV)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Potkategorija.Naziv)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Kategorija.Naziv)
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kolicina)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CijenaPoKomadu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Popust)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UkupnaCijena)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Proizvod.Naziv)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Proizvod.BrojProizvoda)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Proizvod.Boja)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Proizvod.MinimalnaKolicinaNaSkladistu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Proizvod.CijenaBezPDV)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Potkategorija.Naziv)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kategorija.Naziv)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Povratak na pregled drzava", "Drzave")
+</p>

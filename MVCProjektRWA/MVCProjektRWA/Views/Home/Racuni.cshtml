@@ -1,0 +1,123 @@
+﻿@model IEnumerable<MVCProjektRWA.Models.MyModels.Racun>
+
+@{
+    ViewBag.Title = "Racuni";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Racuni</h2>
+
+@if (Model.Count() > 0)
+{
+
+
+<table class="table table-striped table-hover table-bordered" id="tblRacuni">
+    <thead>
+        <tr class="success">
+            <th>
+                @Html.DisplayNameFor(model => model.DatumIzdavanja)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BrojRacuna)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Komentar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Komercijalist.KomercijalistIme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Komercijalist.KomercijalistPrezime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KreditnaKartica.TipKartice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KreditnaKartica.BrojKartice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KreditnaKartica.IstekMjesec)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KreditnaKartica.IstekGodina)
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumIzdavanja)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrojRacuna)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Komentar)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Komercijalist.KomercijalistIme)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Komercijalist.KomercijalistPrezime)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.KreditnaKartica.TipKartice)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.KreditnaKartica.BrojKartice)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.KreditnaKartica.IstekMjesec)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.KreditnaKartica.IstekGodina)
+                </td>
+                <td>
+                    @Html.ActionLink(linkText: "Detalji",
+                                     actionName: "Stavke",
+                                     controllerName: "Home",
+                                     routeValues: new { id = item.IDRacun },
+                                     htmlAttributes: new { @class = "btn btn-xs btn-link" })
+                </td>
+
+            </tr>
+
+        }
+    </tbody>
+</table>
+}
+else
+    {
+        <div class="container text-center" style="text-decoration:solid">
+            <h1 class="text-info">Kupac Nema racuna</h1>
+            <p>@Html.ActionLink("Povratak na pregled drzava", "Drzave")</p>
+        </div>
+
+    }
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+    <script>
+        @if (Model.Count() == 0)
+        {
+            @:toastr.info("Kupac nema racuna");
+        }
+
+        $('#tblRacuni').DataTable({
+            "searching": false,
+            "paging": false,
+            "ordering": true,
+            "order": [],
+            "columnDefs": [
+                { "orderable": true, "targets": 3 },
+                { "orderable": true, "targets": 4 },
+                { "orderable": true, "targets": 5 },
+                { "orderable": true, "targets": 7 },
+                { "orderable": true, "targets": 8 }
+            ]
+        });
+    </script>
+}

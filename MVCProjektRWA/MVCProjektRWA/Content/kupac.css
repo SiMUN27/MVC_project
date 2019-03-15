@@ -1,0 +1,18 @@
+﻿div.kupac {
+    display: inline-block;
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+div.kolekcijaKupaca {
+    text-align: center;
+}
+
+td:first-of-type {
+    font-weight: bold;
+}
+
+td {
+    text-align: left;
+}

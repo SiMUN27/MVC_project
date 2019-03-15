@@ -1,0 +1,49 @@
+﻿@using MVCProjektRWA.Models.MyModels;
+
+
+<div>
+    <p>
+        Grad: @Model.GradID
+    </p>
+</div>
+<p>
+    parcijalni klasa _kupac
+</p>
+
+@*<div class="kupac">
+    <table>
+        <tr>
+            <td>Ime:</td>
+            <td>@Model.Ime</td>
+        </tr>
+        <tr>
+            <td>Prezime:</td>
+            <td>@Model.Prezime</td>
+        </tr>
+        <tr>
+            <td>E-mail:</td>
+            <td>
+                <a href="mailto:@Model.Email">@Model.Email</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Telefon:</td>
+            <td>@Model.Telefon</td>
+        </tr>
+        @*<tr>
+            <td>Grad:</td>
+            <td>@Model.GradID</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                @Html.ActionLink(linkText: "Uredi", actionName: "UpdateKupac", controllerName: "Home",
+                         routeValues: new {id = item.},
+                         htmlAttributes: new { @class = "btn btn-default" })
+            </td>
+        </tr>
+    </table>
+</div>*@
+<p>
+    @Html.ActionLink("Natrag", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-info" })
+</p>
